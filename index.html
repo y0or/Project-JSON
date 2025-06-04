@@ -1,344 +1,233 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exploring the console Module in Node.js</title>
-  <link rel="icon" href="icon.png" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Introdução ao JSON com Exemplos Práticos</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; padding: 1rem; line-height: 1.6; }
+    h2 { color: #333; }
+    pre { background: #282c34; color: #fff; padding: 1rem; border-radius: 8px; overflow-x: auto; position: relative; }
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .toc { background: #f9f9f9; padding: 1rem; border-left: 4px solid #ccc; margin-bottom: 2rem; border-radius: 8px; }
+    .toc ul { margin: 0; padding-left: 1rem; }
+    .toc li { margin-bottom: 0.5rem; }
+    .tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .tab { padding: 0.5rem 1rem; background: #eee; border-radius: 5px; cursor: pointer; }
+    .tab.active { background: #ccc; font-weight: bold; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
 </head>
 <body>
   <header>
-    <div class="header-content">
-      <div class="logo">
-       <a href="https://brusque.ifc.edu.br" target="_blank">
-        <img src="logo.png" alt="Logo IFC">
-       </a>
-      </div>
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search in the article..." onkeyup="searchAndScroll()">
-      </div>
-      <div class="authors">
-        <a href="https://github.com/y0or" target="_blank">y0or</a>
-      </div>
-    </div>
+    <h1>JSON: Conceitos, Exemplos e Aplicações</h1>
   </header>
 
-  <main class="container">
-    <section id="intro" class="fade-in">
-      <h2>What is the <code>console</code> Module?</h2>
-      <p>Imagine you're developing a Node.js project and need to understand what's happening in your program — whether it's to display messages, track errors, or measure execution time. This is where the <code>console</code> module comes in, as a faithful companion for developers. In this guide, we'll dive deep into Node.js's <code>console</code>, exploring each method and constructor with detailed explanations and practical examples. Get ready to master this essential tool!</p>
-      <p>The <code>console</code> module in Node.js is like a Swiss Army knife for debugging. It offers a collection of methods to display messages in the terminal (or other destinations, like files) and is similar to the <code>console</code> you already know from browsers, but adapted to the server environment. Available globally, you don’t need to import anything to start using it — just call <code>console.log("Hello!")</code> and you're good to go.</p>
-      <p>But there's more! The <code>console</code> is also a class you can customize, allowing you to redirect outputs to specific places. Let’s explore this starting with the constructors.</p>
-    </section>
+  <nav class="toc">
+    <strong></strong>
+    <ul>
+      <li><a href="#oque">O que é JSON?</a></li>
+      <li><a href="#estrutura">Estrutura básica</a></li>
+      <li><a href="#exemplos">Exemplos práticos</a></li>
+      <li><a href="#aplicacoes">Aplicações reais</a></li>
+      <li><a href="#desafios">Desafios</a></li>
+    </ul>
+  </nav>
 
-    <section id="construtores" class="fade-in">
-      <h2>Creating Your Own Console: The Constructors</h2>
+  <section id="oque">
+    <h2>📌 O que é JSON?</h2>
+    <p><strong>JSON</strong> (JavaScript Object Notation) é um formato de texto leve usado para armazenar e trocar dados. Ele é muito usado em aplicações web para enviar e receber informações entre cliente e servidor.</p>
+    <p>É como se fosse uma forma simples de escrever objetos, listas e informações de forma organizada e legível tanto por humanos quanto por máquinas.</p>
+  </section>
 
-      <h3><code>new Console(stdout[, stderr][, ignoreErrors])</code></h3>
-      <p><strong>What it does:</strong> Creates a customized <code>Console</code> instance, defining where normal messages (<code>stdout</code>) and errors (<code>stderr</code>) will be displayed. The <code>ignoreErrors</code> parameter decides whether write errors are ignored (default: <code>true</code>).</p>
-      <p><strong>Why use it?</strong> Perfect for when you want logs in files or custom streams instead of the default terminal.</p>
-      <p><strong>How it works:</strong> You pass write streams (like files or the terminal) and use the instance like the global <code>console</code>.</p>
-      <pre><code class="language-javascript">
-            const fs = require("node:fs");
-            const { Console } = require("node:console");
-            
-            // Creating write streams for the app.log and error.log files
-            const output = fs.createWriteStream("./app.log");   // Stream for normal logs
-            const errorOutput = fs.createWriteStream("./error.log"); // Stream for error logs
-            
-            // Creating a customized Console instance to redirect logs
-            const myConsole = new Console(output, errorOutput);
-            
-            // Logging messages to the log files
-            myConsole.log("Application started");  // Writes to app.log file
-            myConsole.error("Critical error!");    // Writes to error.log file
-            
-            // Printing the same messages to the terminal (console)
-            console.log("Application started - console");  // Displays in terminal
-            console.error("Critical error! - console");    // Displays in terminal as error
-      </code></pre>
+  <section id="estrutura">
+    <h2>🏗️ Estrutura Básica de um JSON</h2>
+    <div class="tabs">
+      <div class="tab active" onclick="openTab(event, 'estrutura')">Visualização</div>
+      <div class="tab" onclick="openTab(event, 'explicacao')">Explicação</div>
+    </div>
+    <div id="estrutura" class="tab-content active">
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code class="language-json">{
+  "nome": "João",
+  "idade": 25,
+  "ativo": true,
+  "habilidades": ["HTML", "CSS", "JavaScript"]
+}</code></pre>
+    </div>
+    <div id="explicacao" class="tab-content">
+      <ul>
+        <li><strong>Strings</strong>: Entre aspas duplas ("texto")</li>
+        <li><strong>Números</strong>: Apenas número, sem aspas</li>
+        <li><strong>Booleanos</strong>: <code>true</code> ou <code>false</code></li>
+        <li><strong>Arrays</strong>: Lista de valores entre colchetes [ ]</li>
+        <li><strong>Objetos</strong>: Estruturas entre chaves { }</li>
+      </ul>
+    </div>
+  </section>
 
-      <h3><code>new Console(options)</code></h3>
-      <p><strong>What it does:</strong> A more detailed version of the constructor, accepting an object with options like <code>stdout</code>, <code>stderr</code>, <code>colorMode</code>, and more.</p>
-      <p><strong>Why use it?</strong> Provides full control over formatting (colors, indentation) and behavior.</p>
-      <p><strong>How it works:</strong> Pass an object with the desired settings and use the instance for custom logs.</p>
-      <pre><code class="language-javascript">
-            const fs = require("node:fs");
-            const { Console } = require("node:console");
-            
-            // Creates a write stream for the custom.log file
-            const output = fs.createWriteStream("./custom.log");
-            
-            // Creates a customized Console instance to write to custom.log file
-            const logger = new Console({
-              stdout: output,   // Normal output goes to the file
-              stderr: output,   // Errors also go to the file
-              colorMode: false,  // Disables coloring in the file (does not affect content)
-              groupIndentation: 4 // 4-space indentation for group content (affects visualization only, not the file)
-            });
-            
-            // Starts a log group named "Setup"
-            logger.group("Setup");
-            
-            // Logs the "System ready" message within the group to the file
-            logger.log("System ready");
-            
-            // Logs the same "Setup\n    System ready" message to the terminal, but without the group (just an echo in the terminal)
-            console.log("Setup\n    System ready"); // Echo in terminal
-            
-            // Ends the log group in the file
-            logger.groupEnd();
-      </code></pre>
-    </section>
+  <section id="exemplos">
+    <h2>💻 Exemplos Práticos</h2>
+    <h3>1. Criando e exibindo JSON no Node.js</h3>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code class="language-javascript">// Criamos um objeto com dados
+const aluno = {
+  nome: "Lucas",
+  idade: 20,
+  curso: "Informática"
+};
 
-    <section id="metodos" class="fade-in">
-      <h2>The <code>console</code> Methods: Your Toolbox</h2>
-      <p>Now that we’ve understood how to create a <code>Console</code>, let’s explore the available methods — both in the global <code>console</code> and in customized instances. Each one has a unique purpose, and I’ll show you how to use them with real examples.</p>
+// Mostramos ele como objeto
+console.log("Objeto:");
+console.log(aluno);
 
-      <h3><code>console.assert(value[, ...message])</code></h3>
-      <p><strong>What it does:</strong> Tests if <code>value</code> is true. If false, it displays an error message in <code>stderr</code>.</p>
-      <p><strong>Why use it?</strong> Ideal for checking conditions during development.</p>
-      <pre><code class="language-javascript">
-            const minimumAge = 18;            // Setting the minimum allowed age
-            let userAge = 16;                // User's age
-            
-            // Checks if the user's age is greater than or equal to the minimum age
-            // If the condition is false (as it is here), the error message will be displayed
-            console.assert(userAge >= minimumAge, `User too young: ${userAge} years`);
-            
-            // The condition is true, so the message doesn’t appear
-            console.assert(true, "This doesn’t show up");
-      </code></pre>
+// Convertendo para texto JSON
+console.log("Convertido para JSON:");
+console.log(JSON.stringify(aluno, null, 2));</code></pre>
 
-      <h3><code>console.clear()</code></h3>
-      <p><strong>What it does:</strong> Clears the terminal, but only works if <code>stdout</code> is a TTY (interactive terminal).</p>
-      <p><strong>Why use it?</strong> To keep the terminal clean and organized.</p>
-      <pre><code class="language-javascript">
-            console.log("Old text");  // Displays "Old text"
-            console.clear();          // Clears the console
-            console.log("New text");  // Displays "New text"          
-      </code></pre>
+    <h3>2. Lendo dados em JSON (ex: vindo de uma API)</h3>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code class="language-javascript">// Suponha que recebemos esse texto JSON de um servidor
+const jsonRecebido = '{"nome":"Ana","idade":22}';
 
-      <h3><code>console.count([label])</code></h3>
-      <p><strong>What it does:</strong> Counts how many times it’s been called with a specific label (default: <code>"default"</code>).</p>
-      <p><strong>Why use it?</strong> Useful for tracking repetitions, like iterations in loops.</p>
-      <pre><code class="language-javascript">
-for (let i = 0; i < 3; i++) {
-    // Counts how many times the string "step" was called
-    console.count("step");
-}
-      </code></pre>
+// Convertendo o texto em objeto
+const obj = JSON.parse(jsonRecebido);
+console.log(obj.nome); // Ana</code></pre>
 
-      <h3><code>console.countReset([label])</code></h3>
-      <p><strong>What it does:</strong> Resets the counter for a specific label.</p>
-      <p><strong>Why use it?</strong> To restart the count and reuse the label.</p>
-      <pre><code class="language-javascript">
-            console.count("event");       // Displays: event: 1
-            console.count("event");       // Displays: event: 2
-            console.countReset("event");  // Resets the count for "event"
-            console.count("event");       // Displays: event: 1 (count restarted)
-      </code></pre>
+    <!-- Nova seção com exemplos interativos Node.js -->
+    <h3>3. Exemplos interativos em Node.js com JSON</h3>
 
-      <h3><code>console.debug(data[, ...args])</code></h3>
-      <p><strong>What it does:</strong> An alias for <code>console.log()</code>, but with a debugging vibe.</p>
-      <p><strong>Why use it?</strong> To highlight debug messages in the code.</p>
-      <pre><code class="language-javascript">
-            // Uses the console.debug method to print a debug message to the console
-            console.debug("Debugging value: %d", 42);  // Displays: Debugging value: 42
-      </code></pre>
+    <h4>Exemplo 3.1: Criando um objeto e convertendo para JSON</h4>
+    <pre>
+  <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+  <code class="language-javascript">
+// Criamos um objeto JavaScript
+const usuario = {
+  nome: "Mariana",
+  idade: 27,
+  ativo: true,
+  interesses: ["música", "esportes", "leitura"]
+};
 
-      <h3><code>console.dir(obj[, options])</code></h3>
-      <p><strong>What it does:</strong> Displays a detailed representation of an object using <code>util.inspect()</code>.</p>
-      <p><strong>Why use it?</strong> To inspect complex objects in a readable way.</p>
-      <pre><code class="language-javascript">
-            const user = { name: "Ana", details: { age: 25 } };
+// Convertendo o objeto para texto JSON (string)
+const jsonTexto = JSON.stringify(usuario, null, 2);
 
-            // Displays the object in the console with depth 1 and colors
-            console.dir(user, { depth: 1, colors: true });
-      </code></pre>
+console.log("Objeto JavaScript:");
+console.log(usuario);
 
-      <h3><code>console.dirxml(...data)</code></h3>
-      <p><strong>What it does:</strong> Passes the arguments to <code>console.log()</code> — doesn’t format as XML despite the name.</p>
-      <p><strong>Why use it?</strong> General use, but no special function in Node.js.</p>
-      <pre><code class="language-javascript">
-            // Attempts to use console.dirxml with unconventional parameters
-            console.dirxml("Data", 123);
-            
-            // This will work in VS Code, but it’s not the default behavior of console.dirxml.
-            // Typically, console.dirxml expects a single argument, like a DOM or XML object.
-            // In VS Code (using Node.js), it may simply print the passed values as a console.log() call.
-      </code></pre>
+console.log("\nObjeto convertido para JSON:");
+console.log(jsonTexto);
+  </code>
+</pre>
+    <p><strong>Explicação:</strong> Usamos <code>JSON.stringify</code> para transformar o objeto JS em texto JSON formatado, que pode ser enviado ou armazenado.</p>
 
-      <h3><code>console.error([data][, ...args])</code></h3>
-      <p><strong>What it does:</strong> Writes error messages to <code>stderr</code>.</p>
-      <p><strong>Why use it?</strong> To report problems or failures.</p>
-      <pre><code class="language-javascript">
-            // Displays an error message with string substitution
-            console.error("Error detected: %s", "server failure");
-            
-            // This will print the error message:
-            // "Error detected: server failure" in the console, usually with highlighted error formatting (in red).
-      </code></pre>
+    <h4>Exemplo 3.2: Convertendo JSON para objeto e acessando dados</h4>
+    <pre>
+  <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+  <code class="language-javascript">
+// Texto JSON recebido (exemplo de API)
+const dadosJSON = '{"produto":"Livro","preco":29.9,"disponivel":true}';
 
-      <h3><code>console.group([...label])</code></h3>
-      <p><strong>What it does:</strong> Increases the indentation of subsequent lines, with optional labels.</p>
-      <p><strong>Why use it?</strong> To organize outputs into hierarchical blocks.</p>
-      <pre><code class="language-javascript">
-            console.group("Process");      // Starts a new group called "Process"
-            console.log("Step 1");         // Displays "Step 1" within the "Process" group
-            
-            console.group("Subdetails");   // Starts a subgroup called "Subdetails" within the "Process" group
-            console.log("Item A");         // Displays "Item A" within the "Subdetails" subgroup
-            
-            console.groupEnd();            // Ends the "Subdetails" subgroup
-            console.groupEnd();            // Ends the "Process" group
-      </code></pre>
+// Convertendo texto JSON para objeto JavaScript
+const produto = JSON.parse(dadosJSON);
 
-      <h3><code>console.groupCollapsed()</code></h3>
-      <p><strong>What it does:</strong> Same as <code>group()</code>, but in Node.js it doesn’t collapse (unlike browsers).</p>
-      <p><strong>Why use it?</strong> Compatibility with browser code.</p>
-      <pre><code class="language-javascript">
-            console.groupCollapsed("Section"); // Creates a group called "Section", but it starts collapsed
-            console.log("Inside");             // Displays the "Inside" message within the "Section" group
-            console.groupEnd();                // Ends the "Section" group
-      </code></pre>
+console.log("Nome do produto:", produto.produto);
+console.log("Preço:", produto.preco);
+console.log("Disponível?", produto.disponivel);
+  </code>
+</pre>
+    <p><strong>Explicação:</strong> Com <code>JSON.parse</code> convertemos o texto JSON em objeto JS para acessar os dados facilmente.</p>
 
-      <h3><code>console.groupEnd()</code></h3>
-      <p><strong>What it does:</strong> Reduces the current indentation.</p>
-      <p><strong>Why use it?</strong> To end an indented group.</p>
-      <p><strong>Example:</strong> See <code>console.group()</code> above.</p>
+    <h4>Exemplo 3.3: Simulando um mini banco de dados JSON</h4>
+    <pre>
+  <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+  <code class="language-javascript">
+// Array de objetos representando usuários
+const usuarios = [
+  { id: 1, nome: "Lucas", ativo: true },
+  { id: 2, nome: "Ana", ativo: false },
+  { id: 3, nome: "Pedro", ativo: true }
+];
 
-      <h3><code>console.info([data][, ...args])</code></h3>
-      <p><strong>What it does:</strong> Alias for <code>console.log()</code>, with an informative tone.</p>
-      <p><strong>Why use it?</strong> For general informative messages.</p>
-      <pre><code class="language-javascript">
-            // Displays an informative message in the console with the current date
-            console.info("System online since: %s", new Date());
-      </code></pre>
+// Convertendo array para JSON para salvar ou transferir
+const jsonUsuarios = JSON.stringify(usuarios, null, 2);
 
-      <h3><code>console.log([data][, ...args])</code></h3>
-      <p><strong>What it does:</strong> The classic — writes messages to <code>stdout</code> with formatting.</p>
-      <p><strong>Why use it?</strong> To display results or general logs.</p>
-      <pre><code class="language-javascript">
-            // Displays a formatted message in the console with placeholder substitution
-            console.log("Name: %s, Points: %d", "John", 100);
-      </code></pre>
+console.log("Lista de usuários no formato JSON:");
+console.log(jsonUsuarios);
 
-      <h3><code>console.table(tabularData[, properties])</code></h3>
-      <p><strong>What it does:</strong> Displays data in table format.</p>
-      <p><strong>Why use it?</strong> To visualize structured data clearly.</p>
-      <pre><code class="language-javascript">
-            const team = [
-            { name: "Lucas", role: "Dev" },
-            { name: "Clara", role: "Designer" }
-          ];
-          
-          // Displays the 'team' array in tabular format in the console
-          console.table(team);
-      </code></pre>
+// Convertendo JSON de volta para array JS
+const usuariosObj = JSON.parse(jsonUsuarios);
 
-      <h3><code>console.time([label])</code></h3>
-      <p><strong>What it does:</strong> Starts a timer to measure time.</p>
-      <p><strong>Why use it?</strong> To analyze the performance of code sections.</p>
-      <pre><code class="language-javascript">
-            // Starts the timer with the "calculation" label
-            console.time("calculation");
-            
-            // Executes a loop (just a simple loop here)
-            for (let i = 0; i < 1000000; i++) {}
-            
-            // Stops the timer and displays the elapsed time with the same "calculation" label
-            console.timeEnd("calculation");
-            
-            // For **Node.js/VS Code**, use **console.time()** and **console.timeEnd()** to measure execution time, as **console.timeStamp()** and **console.profile()** don’t work the same way in the terminal.
-            console.time("Heavy Loop");
-            for (let i = 0; i < 100000; i++) {}
-            console.timeEnd("Heavy Loop");
-      </code></pre>
+// Filtrando usuários ativos
+const ativos = usuariosObj.filter(u => u.ativo);
 
-      <h3><code>console.timeEnd([label])</code></h3>
-      <p><strong>What it does:</strong> Stops the timer and displays the elapsed time.</p>
-      <p><strong>Why use it?</strong> To finish the measurement started with <code>time</code>.</p>
-      <p><strong>Example:</strong> See <code>console.time()</code> above.</p>
+console.log("\nUsuários ativos:");
+console.table(ativos);
+  </code>
+</pre>
+    <p><strong>Explicação:</strong> Mostramos como JSON pode representar listas complexas e usamos <code>console.table</code> para exibir os dados de forma organizada no console.</p>
+  </section>
 
-      <h3><code>console.timeLog([label][, ...data])</code></h3>
-      <p><strong>What it does:</strong> Shows the partial time of an active timer.</p>
-      <p><strong>Why use it?</strong> To monitor progress in long operations.</p>
-      <pre><code class="language-javascript">
-            // Starts the timer with the "wait" label
-            console.time("wait");
-            
-            // Sets a timer to run after 1000 milliseconds (1 second)
-            setTimeout(() => {
-              // Logs the time up to this point with the message "Halfway through"
-              console.timeLog("wait", "Halfway through");
-            }, 1000);
-      </code></pre>
+  <section id="aplicacoes">
+    <h2>🌐 Aplicações Reais do JSON</h2>
+    <ul>
+      <li>📡 <strong>APIs:</strong> Comunicação entre sites e serviços</li>
+      <li>💾 <strong>Configurações:</strong> Arquivos como <code>package.json</code></li>
+      <li>🧪 <strong>Testes:</strong> Gerar dados falsos para simulação</li>
+      <li>📱 <strong>Apps Mobile:</strong> Envio de dados para servidores</li>
+    </ul>
 
-      <h3><code>console.trace([message][, ...args])</code></h3>
-      <p><strong>What it does:</strong> Displays the stack trace.</p>
-      <p><strong>Why use it?</strong> For debugging, showing the code’s path.</p>
-      <pre><code class="language-javascript">
-            function test() {
-                  console.trace("Where am I?"); // Displays the stack trace
-                }
-                
-                test(); // Calls the test function
-      </code></pre>
+    <h3>Exemplo de uso com API (fetch):</h3>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code class="language-javascript">fetch("https://api.exemplo.com/usuarios")
+  .then(res => res.json())
+  .then(data => {
+    console.log("Usuários:", data);
+  });</code></pre>
+  </section>
 
-      <h3><code>console.warn([data][, ...args])</code></h3>
-      <p><strong>What it does:</strong> Alias for <code>console.error()</code>, with a warning tone.</p>
-      <p><strong>Why use it?</strong> To alert about potentially problematic situations.</p>
-      <pre><code class="language-javascript">
-            // Displays a warning message in the console, drawing the user’s attention
-            console.warn("Warning: %s is almost full", "disk");  // Displays: "Warning: disk is almost full"
-      </code></pre>
-    </section>
-
-    <section id="inspector" class="fade-in">
-      <h2>Inspector-Only Methods: Advanced Debugging</h2>
-      <p>These methods only work with the <code>--inspect</code> flag, integrating with Chrome DevTools.</p>
-
-      <h3><code>console.profile([label])</code></h3>
-      <p><strong>What it does:</strong> Starts a CPU profile for performance analysis.</p>
-      <p><strong>Why use it?</strong> To identify bottlenecks in the code.</p>
-      <pre><code class="language-javascript">
-            // **console.profile()**: Starts the performance profile and collects data about code execution. Works only in browser developer tools.
-            console.profile("Heavy Loop");
-            
-            for (let i = 0; i < 100000; i++) {}
-            
-            console.profileEnd("Heavy Loop"); // Ends the performance profile
-      </code></pre>
-
-      <h3><code>console.profileEnd([label])</code></h3>
-      <p><strong>What it does:</strong> Stops the CPU profile.</p>
-      <p><strong>Why use it?</strong> To finish the analysis started with <code>profile</code>.</p>
-      <p><strong>Example:</strong> See <code>console.profile()</code> above.</p>
-
-      <h3><code>console.timeStamp([label])</code></h3>
-      <p><strong>What it does:</strong> Adds a marker to the inspector’s Timeline.</p>
-      <p><strong>Why use it?</strong> To mark events for temporal analysis.</p>
-      <pre><code class="language-javascript">
-            // **console.timeStamp()**: Marks a specific point in time. Works only in browser developer tools, such as in the "Performance" or "Timeline" tab.
-            console.timeStamp("Task start");
-      </code></pre>
-    </section>
-
-    <section id="conclusao" class="fade-in">
-      <h2>Conclusion</h2>
-      <p>The <code>console</code> module in Node.js is more than just a basic <code>log</code> — it’s a complete toolbox for debugging and logging. From displaying simple messages to creating custom logs in files, measuring performance, or tracking errors, it has everything you need. Try out the examples, play with the methods, and see how they can make your life as a developer easier. What’s your favorite? Let me know in the comments (or imagine we’re chatting)!</p>
-    </section>
-  </main>
+  <section id="desafios">
+    <h2>🧠 Desafios para Praticar</h2>
+    <ul>
+      <li>✅ Crie um objeto com seus dados (nome, idade, curso, etc) e converta para JSON.</li>
+      <li>✅ Simule o recebimento de um texto JSON e transforme em objeto com <code>JSON.parse</code>.</li>
+      <li>✅ Faça um array de objetos com 3 alunos diferentes e use <code>console.table</code> para visualizar.</li>
+    </ul>
+  </section>
 
   <footer>
-    <p>© 2025 - Node.js Guide | Created in Santa Catarina, Brazil (UTC-3)</p>
+    <p>Artigo por <a href="https://github.com/y0or" target="_blank">y0or</a> – Projeto IFC</p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script src="script.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script>
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.innerText = "Copiado!";
+        setTimeout(() => btn.innerText = "Copiar", 1500);
+      });
+    }
+
+    function openTab(event, tabId) {
+      const tabs = document.querySelectorAll(".tab");
+      const contents = document.querySelectorAll(".tab-content");
+      tabs.forEach(t => t.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
+      document.getElementById(tabId).classList.add("active");
+      event.currentTarget.classList.add("active");
+    }
+  </script>
 </body>
 </html>
