@@ -1,211 +1,239 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Introdução ao JSON com Exemplos Práticos</title>
+  <title>Introduction to JSON with Practical Examples</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-  <style>
-    body { font-family: 'Roboto', sans-serif; padding: 1rem; line-height: 1.6; }
-    pre { background: #282c34; color: #fff; padding: 1rem; border-radius: 8px; overflow-x: auto; position: relative; }
-    .copy-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #000000;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 4px 8px;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-    .toc { background: rgba(219, 219, 219, 0.92);; padding: 1rem; border-left: 4px solid #ffffff; margin-bottom: 2rem; border-radius: 8px; }
-    .toc ul { margin: 0; padding-left: 1rem; }
-    .toc li { margin-bottom: 0.5rem; }
-    .tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
-    .tab { padding: 0.5rem 1rem; background: #eee; border-radius: 5px; cursor: pointer; }
-    .tab.active { background: #ccc; font-weight: bold; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-  </style>
 </head>
 <body>
   <header>
-    <h1>JSON: Conceitos, Exemplos e Aplicações</h1>
+    <h1>JSON: Concepts, Examples, and Applications</h1>
   </header>
 
+  <div class="autor-fixo">
+    <a href="https://ifc.edu.br" target="_blank">
+      <img src="logo.png" alt="IFC" class="ifc-banner">
+    </a>
+    <span class="author-text">Article by <a href="https://github.com/y0or" target="_blank">y0or</a></span>
+  </div>
+
+  <!-- Barra de pesquisa -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search sections..." aria-label="Search sections" />
+  </div>
+
   <nav class="toc">
-    <strong></strong>
     <ul>
-      <li><a href="#oque">O que é JSON?</a></li>
-      <li><a href="#estrutura">Estrutura básica</a></li>
-      <li><a href="#exemplos">Exemplos práticos</a></li>
-      <li><a href="#aplicacoes">Aplicações reais</a></li>
-      <li><a href="#desafios">Desafios</a></li>
+      <li><a href="#oque">What is JSON?</a></li>
+      <li><a href="#estrutura">Basic Structure</a></li>
+      <li><a href="#exemplos">Practical Examples</a></li>
+      <li><a href="#aplicacoes">Real-world Applications</a></li>
+      <li><a href="#desafios">Challenges</a></li>
     </ul>
   </nav>
 
   <section id="oque">
-    <h2>📌 O que é JSON?</h2>
-    <p><strong>JSON</strong> (JavaScript Object Notation) é um formato de texto leve usado para armazenar e trocar dados. Ele é muito usado em aplicações web para enviar e receber informações entre cliente e servidor.</p>
-    <p>É como se fosse uma forma simples de escrever objetos, listas e informações de forma organizada e legível tanto por humanos quanto por máquinas.</p>
+    <h2>📌 What is JSON?</h2>
+    <p><strong>JSON</strong> (JavaScript Object Notation) is a lightweight text format used to store and exchange data. It’s widely used in web applications to send and receive information between client and server.</p>
+    <p>It’s like a simple way to write objects, lists, and information in an organized and readable way, both for humans and machines.</p>
   </section>
 
   <section id="estrutura">
-    <h2>🏗️ Estrutura Básica de um JSON</h2>
+    <h2>🏗️ Basic Structure of JSON</h2>
     <div class="tabs">
-      <div class="tab active" onclick="openTab(event, 'estrutura')">Visualização</div>
-      <div class="tab" onclick="openTab(event, 'explicacao')">Explicação</div>
+      <div class="tab active" onclick="openTab(event, 'tab-visualizacao')">View</div>
+      <div class="tab" onclick="openTab(event, 'tab-explicacao')">Explanation</div>
     </div>
-    <div id="estrutura" class="tab-content active">
-      <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code class="language-json">{
-  "nome": "João",
-  "idade": 25,
-  "ativo": true,
-  "habilidades": ["HTML", "CSS", "JavaScript"]
+
+    <div id="tab-visualizacao" class="tab-content active">
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "name": "John",
+  "age": 25,
+  "active": true,
+  "skills": ["HTML", "CSS", "JavaScript"]
 }</code></pre>
     </div>
-    <div id="explicacao" class="tab-content">
+
+    <div id="tab-explicacao" class="tab-content">
       <ul>
-        <li><strong>Strings</strong>: Entre aspas duplas ("texto")</li>
-        <li><strong>Números</strong>: Apenas número, sem aspas</li>
-        <li><strong>Booleanos</strong>: <code>true</code> ou <code>false</code></li>
-        <li><strong>Arrays</strong>: Lista de valores entre colchetes [ ]</li>
-        <li><strong>Objetos</strong>: Estruturas entre chaves { }</li>
+        <li><strong>Strings</strong>: Enclosed in double quotes ("text")</li>
+        <li><strong>Numbers</strong>: Just numbers, no quotes</li>
+        <li><strong>Booleans</strong>: <code>true</code> or <code>false</code></li>
+        <li><strong>Arrays</strong>: List of values inside brackets [ ]</li>
+        <li><strong>Objects</strong>: Structures inside braces { }</li>
       </ul>
     </div>
   </section>
 
   <section id="exemplos">
-    <h2>💻 Exemplos Práticos</h2>
-    <h3>1. Criando e exibindo JSON no Node.js</h3>
-    <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code class="language-javascript">// Criamos um objeto com dados
-const aluno = {
-  nome: "Lucas",
-  idade: 20,
-  curso: "Informática"
+    <h2>💻 Practical Examples</h2>
+    <h3>1. Creating and displaying JSON in Node.js</h3>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-javascript">// Create an object with data
+const student = {
+  name: "Lucas",
+  age: 20,
+  course: "IT"
 };
 
-// Mostramos ele como objeto
-console.log("Objeto:");
-console.log(aluno);
+console.log("Object:");
+console.log(student);
 
-// Convertendo para texto JSON
-console.log("Convertido para JSON:");
-console.log(JSON.stringify(aluno, null, 2));</code></pre>
+console.log("Converted to JSON:");
+console.log(JSON.stringify(student, null, 2));</code></pre>
 
-    <h3>2. Lendo dados em JSON (ex: vindo de uma API)</h3>
-    <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code class="language-javascript">// Suponha que recebemos esse texto JSON de um servidor
-const jsonRecebido = '{"nome":"Ana","idade":22}';
+    <h3>2. Reading JSON data (e.g. from an API)</h3>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-javascript">const jsonReceived = '{"name":"Ana","age":22}';
+const obj = JSON.parse(jsonReceived);
+console.log(obj.name); // Ana</code></pre>
 
-// Convertendo o texto em objeto
-const obj = JSON.parse(jsonRecebido);
-console.log(obj.nome); // Ana</code></pre>
+    <h3>3. Interactive examples in Node.js with JSON</h3>
 
-    <!-- Nova seção com exemplos interativos Node.js -->
-    <h3>3. Exemplos interativos em Node.js com JSON</h3>
-
-    <h4>Exemplo 3.1: Criando um objeto e convertendo para JSON</h4>
-    <pre>
-  <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-  <code class="language-javascript">
-// Criamos um objeto JavaScript
-const usuario = {
-  nome: "Mariana",
-  idade: 27,
-  ativo: true,
-  interesses: ["música", "esportes", "leitura"]
+    <h4>Example 3.1: Creating an object and converting to JSON</h4>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-javascript">const user = {
+  name: "Mariana",
+  age: 27,
+  active: true,
+  interests: ["music", "sports", "reading"]
 };
 
-// Convertendo o objeto para texto JSON (string)
-const jsonTexto = JSON.stringify(usuario, null, 2);
+const jsonText = JSON.stringify(user, null, 2);
+console.log("JavaScript Object:");
+console.log(user);
 
-console.log("Objeto JavaScript:");
-console.log(usuario);
+console.log("\nConverted to JSON:");
+console.log(jsonText);</code></pre>
 
-console.log("\nObjeto convertido para JSON:");
-console.log(jsonTexto);
-  </code>
-</pre>
-    <p><strong>Explicação:</strong> Usamos <code>JSON.stringify</code> para transformar o objeto JS em texto JSON formatado, que pode ser enviado ou armazenado.</p>
+    <p><strong>Explanation:</strong> We use <code>JSON.stringify</code> to convert the JS object to formatted JSON text.</p>
 
-    <h4>Exemplo 3.2: Convertendo JSON para objeto e acessando dados</h4>
-    <pre>
-  <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-  <code class="language-javascript">
-// Texto JSON recebido (exemplo de API)
-const dadosJSON = '{"produto":"Livro","preco":29.9,"disponivel":true}';
+    <h4>Example 3.2: Converting JSON to object and accessing data</h4>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-javascript">const jsonData = '{"product":"Book","price":29.9,"available":true}';
+const product = JSON.parse(jsonData);
 
-// Convertendo texto JSON para objeto JavaScript
-const produto = JSON.parse(dadosJSON);
+console.log("Product name:", product.product);
+console.log("Price:", product.price);
+console.log("Available?", product.available);</code></pre>
 
-console.log("Nome do produto:", produto.produto);
-console.log("Preço:", produto.preco);
-console.log("Disponível?", produto.disponivel);
-  </code>
-</pre>
-    <p><strong>Explicação:</strong> Com <code>JSON.parse</code> convertemos o texto JSON em objeto JS para acessar os dados facilmente.</p>
+    <p><strong>Explanation:</strong> Using <code>JSON.parse</code> we convert JSON text into a JS object to access the data.</p>
 
-    <h4>Exemplo 3.3: Simulando um mini banco de dados JSON</h4>
-    <pre>
-  <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-  <code class="language-javascript">
-// Array de objetos representando usuários
-const usuarios = [
-  { id: 1, nome: "Lucas", ativo: true },
-  { id: 2, nome: "Ana", ativo: false },
-  { id: 3, nome: "Pedro", ativo: true }
+    <h4>Example 3.3: Simulating a mini JSON database</h4>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-javascript">const users = [
+  { id: 1, name: "Lucas", active: true },
+  { id: 2, name: "Ana", active: false },
+  { id: 3, name: "Pedro", active: true }
 ];
 
-// Convertendo array para JSON para salvar ou transferir
-const jsonUsuarios = JSON.stringify(usuarios, null, 2);
+const jsonUsers = JSON.stringify(users, null, 2);
+console.log("List of users in JSON format:");
+console.log(jsonUsers);
 
-console.log("Lista de usuários no formato JSON:");
-console.log(jsonUsuarios);
+const usersObj = JSON.parse(jsonUsers);
+const activeUsers = usersObj.filter(u => u.active);
 
-// Convertendo JSON de volta para array JS
-const usuariosObj = JSON.parse(jsonUsuarios);
+console.log("\nActive users:");
+console.table(activeUsers);</code></pre>
 
-// Filtrando usuários ativos
-const ativos = usuariosObj.filter(u => u.ativo);
+    <p><strong>Explanation:</strong> Shows how JSON can represent complex lists and uses <code>console.table</code> to display data.</p>
 
-console.log("\nUsuários ativos:");
-console.table(ativos);
-  </code>
-</pre>
-    <p><strong>Explicação:</strong> Mostramos como JSON pode representar listas complexas e usamos <code>console.table</code> para exibir os dados de forma organizada no console.</p>
+    <!-- Novos exemplos adicionados -->
+    <h4>Example 4: Nested JSON with address</h4>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-javascript">const person = {
+  name: "Pedro",
+  age: 30,
+  address: {
+    street: "Av. Brasil",
+    number: 100,
+    city: "Rio de Janeiro",
+    state: "RJ",
+    zipcode: "20000-000"
+  }
+};
+
+console.log(JSON.stringify(person, null, 2));</code></pre>
+    <p><strong>Explanation:</strong> This example shows how JSON can represent objects inside objects (nested data).</p>
+
+    <h4>Example 5: Filtering a list of JSON objects</h4>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-javascript">const products = [
+  { id: 1, name: "Pen", price: 1.2, inStock: true },
+  { id: 2, name: "Notebook", price: 4.5, inStock: false },
+  { id: 3, name: "Pencil", price: 0.8, inStock: true }
+];
+
+const availableProducts = products.filter(p => p.inStock);
+
+console.log(JSON.stringify(availableProducts, null, 2));</code></pre>
+    <p><strong>Explanation:</strong> Filters a JSON array to get only products that are in stock.</p>
+
+    <h4>Example 6: JSON configuration file</h4>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "appName": "MyApp",
+  "version": "1.0.0",
+  "features": {
+    "login": true,
+    "signup": false,
+    "darkMode": true
+  },
+  "maxUsers": 1000
+}</code></pre>
+    <p><strong>Explanation:</strong> Common use of JSON to store application configuration.</p>
+
+    <h4>Example 7: JSON movie data</h4>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "title": "Inception",
+  "director": "Christopher Nolan",
+  "year": 2010,
+  "genres": ["Action", "Sci-Fi", "Thriller"],
+  "ratings": {
+    "IMDB": 8.8,
+    "RottenTomatoes": 87
+  }
+}</code></pre>
+    <p><strong>Explanation:</strong> Example of how movie details can be represented in JSON, similar to API responses.</p>
+
+    <h4>Example 8: User preferences JSON</h4>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "userId": 12345,
+  "theme": "dark",
+  "notifications": {
+    "email": true,
+    "sms": false,
+    "push": true
+  },
+  "language": "en"
+}</code></pre>
+    <p><strong>Explanation:</strong> Represents user preferences and settings.</p>
+
   </section>
 
   <section id="aplicacoes">
-    <h2>🌐 Aplicações Reais do JSON</h2>
+    <h2>🌐 Real-world Applications of JSON</h2>
     <ul>
-      <li>📡 <strong>APIs:</strong> Comunicação entre sites e serviços</li>
-      <li>💾 <strong>Configurações:</strong> Arquivos como <code>package.json</code></li>
-      <li>🧪 <strong>Testes:</strong> Gerar dados falsos para simulação</li>
-      <li>📱 <strong>Apps Mobile:</strong> Envio de dados para servidores</li>
+      <li>📡 <strong>APIs:</strong> Communication between websites and services</li>
+      <li>💾 <strong>Configurations:</strong> Files like <code>package.json</code></li>
+      <li>🧪 <strong>Testing:</strong> Generate fake data for simulations</li>
+      <li>📱 <strong>Mobile Apps:</strong> Sending data to servers</li>
     </ul>
 
-    <h3>Exemplo de uso com API (fetch):</h3>
-    <pre><button class="copy-btn" onclick="copyCode(this)">Copiar</button><code class="language-javascript">fetch("https://api.exemplo.com/usuarios")
+    <h3>Example usage with API (fetch):</h3>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-javascript">fetch("https://api.example.com/users")
   .then(res => res.json())
   .then(data => {
-    console.log("Usuários:", data);
+    console.log("Users:", data);
   });</code></pre>
   </section>
 
   <section id="desafios">
-    <h2>🧠 Desafios para Praticar</h2>
+    <h2>🧠 Challenges to Practice</h2>
     <ul>
-      <li>✅ Crie um objeto com seus dados (nome, idade, curso, etc) e converta para JSON.</li>
-      <li>✅ Simule o recebimento de um texto JSON e transforme em objeto com <code>JSON.parse</code>.</li>
-      <li>✅ Faça um array de objetos com 3 alunos diferentes e use <code>console.table</code> para visualizar.</li>
+      <li>✅ Create an object with your data (name, age, course, etc.) and convert to JSON.</li>
+      <li>✅ Simulate receiving a JSON text and convert to object with <code>JSON.parse</code>.</li>
+      <li>✅ Create an array of objects with 3 different students and use <code>console.table</code> to visualize.</li>
     </ul>
   </section>
 
   <footer>
-    <p>Artigo por <a href="https://github.com/y0or" target="_blank">y0or</a> – Projeto IFC</p>
+    <p>Article by <a href="https://github.com/y0or" target="_blank">y0or</a> – IFC Project</p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -214,8 +242,8 @@ console.table(ativos);
     function copyCode(btn) {
       const code = btn.nextElementSibling.innerText;
       navigator.clipboard.writeText(code).then(() => {
-        btn.innerText = "Copiado!";
-        setTimeout(() => btn.innerText = "Copiar", 1500);
+        btn.innerText = "Copied!";
+        setTimeout(() => btn.innerText = "Copy", 1500);
       });
     }
 
@@ -227,6 +255,23 @@ console.table(ativos);
       document.getElementById(tabId).classList.add("active");
       event.currentTarget.classList.add("active");
     }
+
+    // Search filter script
+    const searchInput = document.getElementById('searchInput');
+    const sections = document.querySelectorAll('section');
+
+    searchInput.addEventListener('input', function() {
+      const filter = this.value.toLowerCase();
+
+      sections.forEach(section => {
+        const title = section.querySelector('h2').textContent.toLowerCase();
+        if (title.includes(filter)) {
+          section.style.display = '';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    });
   </script>
 </body>
 </html>

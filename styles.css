@@ -1,303 +1,268 @@
-/* Reset e base */
+/* Reset básico */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
-  scroll-behavior: smooth; /* Rolagem suave */
 }
 
+/* Fonte base e background escuro */
 body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
   line-height: 1.6;
-  color: #ffffff;
-  background: linear-gradient(135deg, #555454 0%, #4e4c4c 100%);
-  overflow-x: hidden;
   min-height: 100vh;
+  padding: 20px;
 }
 
-/* Cabeçalho fixo com estilo moderno e glassmorphism */
-header {
-  background: rgba(30, 30, 30, 0.95);
-  padding: 15px 0;
-  border-bottom: 1px solid #444;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  backdrop-filter: blur(6px);
-  transition: all 0.3s ease;
+/* Cabeçalho */
+header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: #61dafb;
+  text-align: center;
 }
 
-.header-content {
+/* Autor fixo no topo direita */
+.autor-fixo {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  background-color: #1f1f1fcc;
+  padding: 8px 12px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
+  gap: 8px;
+  font-size: 0.9rem;
+  z-index: 1000;
+  box-shadow: 0 0 8px #222;
 }
 
-/* Logo com animação ao passar o mouse */
-.logo img {
-  height: 40px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  cursor: pointer;
-}
-
-.logo img:hover {
-  transform: scale(1.1) rotate(5deg);
-  filter: brightness(1.2);
-}
-
-/* Barra de busca */
-.search-bar {
-  flex: 1;
-  max-width: 400px;
-  margin: 0 10px;
-}
-
-.search-bar input {
-  width: 100%;
-  padding: 10px 15px;
-  border: 2px solid #161414c9;
-  border-radius: 25px;
-  font-size: 0.9em;
-  outline: none;
-  background: #ffffff;
-  color: #070606;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search-bar input:focus {
-  border-color: #4caf50;
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
-}
-
-/* Links dos autores */
-.authors {
-  display: flex;
-  gap: 15px;
-}
-
-.authors a {
-  color: #ffffff;
+.autor-fixo a {
+  color: #61dafb;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 0.9em;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: color 0.3s ease, transform 0.3s ease, background 0.3s ease;
-}
-
-.authors a:hover {
-  color: #ffffff;
-  transform: translateY(-2px);
-  background: rgba(76, 175, 80, 0.1);
-}
-
-/* Títulos */
-h2 {
-  font-size: 2em;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #ffffff;
-  padding: 5px 0;
-  border-left: 6px solid #ffffff;
-  padding-left: 12px;
-}
-
-h3 {
-  font-size: 1.5em;
   font-weight: 600;
-  margin: 25px 0 12px;
-  color: #f0f0f0;
-  padding: 5px 0;
 }
 
-p {
-  margin-bottom: 18px;
-  font-size: 1.1em;
-  color: #ddd;
-  padding: 5px 0;
+.autor-fixo a:hover {
+  text-decoration: underline;
 }
 
-/* Seções com identidade visual */
+.ifc-banner {
+  height: 30px;
+  width: auto;
+  border-radius: 4px;
+}
+
+/* Barra de pesquisa */
+.search-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#searchInput {
+  width: 90%;
+  max-width: 400px;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: none;
+  background-color: #2a2a2a;
+  color: #eee;
+  font-size: 1rem;
+  box-shadow: inset 0 0 5px #000;
+  transition: background-color 0.3s ease;
+}
+
+#searchInput::placeholder {
+  color: #888;
+}
+
+#searchInput:focus {
+  background-color: #3c3c3c;
+  outline: none;
+  box-shadow: 0 0 8px #61dafb;
+}
+
+/* Navegação TOC */
+.toc {
+  background-color: #1a1a1a;
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  max-width: 280px;
+  font-size: 1rem;
+  box-shadow: 0 0 10px #000;
+}
+
+.toc ul {
+  list-style: none;
+}
+
+.toc ul li {
+  margin-bottom: 10px;
+}
+
+.toc a {
+  color: #61dafb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.toc a:hover {
+  color: #21a1f1;
+  text-decoration: underline;
+}
+
+/* Seções */
 section {
   margin-bottom: 40px;
-  padding: 20px 25px;
-  background: rgba(70, 64, 64, 0.92);
-  border-left: 5px solid #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-section:hover {
-  transform: scale(1.01);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #61dafb;
+  border-bottom: 2px solid #21a1f1;
+  padding-bottom: 6px;
 }
 
-/* Blocos de código estilizados */
-pre {
-  background: #282c35;
-  padding: 15px;
-  border-radius: 10px;
-  overflow-x: auto;
-  width: 100%;
-  margin-bottom: 25px;
-  font-family: 'Fira Code', monospace;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: #dcdcdc;
+/* Tabs para estrutura */
+.tabs {
+  display: flex;
+  margin-bottom: 15px;
+  user-select: none;
 }
 
-pre:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 15px rgba(243, 242, 242, 0.4);
-}
-
-/* Botão de cópia */
-button.copy-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 8px 16px;
-  background: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
+.tab {
+  background-color: #222;
+  padding: 10px 25px;
   cursor: pointer;
-  font-size: 0.85em;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #bbb;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  margin-right: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-button.copy-btn:hover {
-  background: #3b82f6;
-  transform: scale(1.08);
-  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.5);
+.tab:hover {
+  background-color: #333;
 }
 
-/* Rodapé clean e moderno */
+.tab.active {
+  background-color: #61dafb;
+  color: #121212;
+  font-weight: 700;
+  box-shadow: 0 3px 10px #61dafbaa;
+}
+
+.tab-content {
+  background-color: #1e1e1e;
+  padding: 15px 20px;
+  border-radius: 0 12px 12px 12px;
+  display: none;
+  white-space: pre-wrap;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Código formatado */
+pre {
+  position: relative;
+  background: #1e1e1e;
+  padding: 20px 40px 20px 20px;
+  border-radius: 12px;
+  overflow-x: auto;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  box-shadow: inset 0 0 10px #000000aa;
+}
+
+/* Botão copiar */
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #09ff00;
+  border: none;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 6px #61dafb99;
+  z-index: 10;
+}
+
+.copy-btn:hover {
+  background-color: #61dafb;
+  color: #121212;
+}
+
+/* Listas de explicação */
+ul {
+  margin-left: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Links dentro do conteúdo */
+a {
+  color: #61dafb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Tabela do console.table (usado em Node.js) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  border: 1px solid #444;
+  padding: 8px 12px;
+  text-align: left;
+  background-color: #222;
+  color: #ddd;
+}
+
+th {
+  background-color: #333;
+}
+
+/* Rodapé */
 footer {
   text-align: center;
-  padding: 25px;
-  color: #aaa;
-  font-size: 1em;
-  border-top: 1px solid #404040;
-  background: rgba(25, 25, 25, 0.95);
+  padding: 20px 0;
+  border-top: 1px solid #333;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 40px;
 }
 
-/* Responsivo */
-
-/* Tablets e dispositivos médios */
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    gap: 12px;
-    padding: 10px 5px;
+/* Responsividade */
+@media (max-width: 600px) {
+  body {
+    padding: 15px 10px;
   }
-
-  .search-bar {
-    width: 100%;
-    max-width: none;
-    margin: 5px 0;
+  .toc {
+    max-width: 100%;
+    margin-bottom: 20px;
   }
-
-  .authors {
-    justify-content: center;
-  }
-
-  main.container {
-    padding: 20px 10px;
-  }
-
-  section {
-    padding: 15px 20px;
-  }
-
-  h2 {
-    font-size: 1.8em;
-  }
-
-  h3 {
-    font-size: 1.3em;
-  }
-
-  p {
-    font-size: 1em;
-  }
-
   pre {
-    padding: 15px;
-  }
-
-  button.copy-btn {
-    padding: 6px 12px;
-    font-size: 0.8em;
-  }
-
-  footer {
-    padding: 15px;
-  }
-}
-
-/* Celulares */
-@media (max-width: 480px) {
-  .logo img {
-    height: 35px;
-  }
-
-  .header-content {
-    padding: 5px;
-  }
-
-  .search-bar input {
-    padding: 8px 12px;
-    font-size: 0.85em;
-  }
-
-  .authors {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .authors a {
-    font-size: 0.85em;
-  }
-
-  main.container {
-    padding: 15px 5px;
-  }
-
-  section {
-    padding: 10px 15px;
-  }
-
-  h2 {
-    font-size: 1.6em;
-  }
-
-  h3 {
-    font-size: 1.2em;
-  }
-
-  p {
-    font-size: 0.95em;
-  }
-
-  pre {
-    padding: 12px;
-  }
-
-  button.copy-btn {
-    top: 8px;
-    right: 8px;
-    padding: 5px 10px;
-    font-size: 0.7em;
-  }
-
-  footer {
-    padding: 12px;
+    padding: 15px 10px 15px 10px;
   }
 }
