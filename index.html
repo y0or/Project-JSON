@@ -12,6 +12,10 @@
     <h1>JSON: Concepts, Examples, and Applications</h1>
   </header>
 
+  <div class="translate-container">
+  <button id="translateBtn">🌐 Traduzir</button>
+</div>
+
   <div class="autor-fixo">
     <a href="https://ifc.edu.br" target="_blank">
       <img src="logo.png" alt="IFC" class="ifc-banner">
@@ -204,6 +208,60 @@ console.log(JSON.stringify(availableProducts, null, 2));</code></pre>
 }</code></pre>
     <p><strong>Explanation:</strong> Represents user preferences and settings.</p>
 
+    <h4>Example 9: Book Data</h4>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "title": "Dom Casmurro",
+  "author": "Machado de Assis",
+  "year": 1899,
+  "genres": ["Romance", "Brazilian Literature"],
+  "available": true
+}</code></pre>
+<p><strong>Explanation:</strong> Represents book data with title, author, year, genres (array), and availability (boolean).</p>
+
+<h4>Example 10: Weather Information</h4>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "city": "São Paulo",
+  "temperature": 23,
+  "condition": "Cloudy",
+  "precipitation_mm": 0,
+  "wind": {
+    "speed_kmh": 15,
+    "direction": "Northwest"
+  }
+}</code></pre>
+<p><strong>Explanation:</strong> Weather data including temperature, condition, precipitation, and nested wind object.</p>
+
+<h4>Example 11: Music App Settings</h4>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "user": "maria123",
+  "favoritePlaylist": "Top Hits 2025",
+  "audioQuality": "High",
+  "notifications": {
+    "email": false,
+    "push": true
+  }
+}</code></pre>
+<p><strong>Explanation:</strong> User preferences in a music app, showing strings, booleans, and nested objects.</p>
+
+<h4>Example 12: Class Schedule Table</h4>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "schedules": [
+    {"day": "Monday", "subject": "Math", "start": "08:00", "end": "09:30"},
+    {"day": "Wednesday", "subject": "History", "start": "10:00", "end": "11:30"},
+    {"day": "Friday", "subject": "Chemistry", "start": "13:00", "end": "14:30"}
+  ]
+}</code></pre>
+<p><strong>Explanation:</strong> List of class schedule objects with day, subject, and time.</p>
+
+<h4>Example 13: Signup Form Data</h4>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-json">{
+  "name": "Pedro Silva",
+  "email": "pedro@email.com",
+  "phone": "+551199999999",
+  "newsletter": true
+}</code></pre>
+<p><strong>Explanation:</strong> Basic signup form info with text and a boolean for newsletter subscription.</p>
+
   </section>
 
   <section id="aplicacoes">
@@ -272,6 +330,45 @@ console.log(JSON.stringify(availableProducts, null, 2));</code></pre>
         }
       });
     });
+    let translations = {};
+let isTranslated = false;
+
+async function loadTranslations() {
+  const res = await fetch("translations_pt.json");
+  translations = await res.json();
+}
+
+function translatePage() {
+  const elements = document.querySelectorAll('h1, h2, h3, h4, p, li, strong, span, button, a');
+
+  elements.forEach(el => {
+    const original = el.textContent.trim();
+
+    if (!isTranslated && translations[original]) {
+      el.dataset.original = original;
+      el.textContent = translations[original];
+    } else if (isTranslated && el.dataset.original) {
+      el.textContent = el.dataset.original;
+    }
+  });
+
+  const searchInput = document.getElementById("searchInput");
+  if (!isTranslated) {
+    searchInput.dataset.placeholder = searchInput.placeholder;
+    searchInput.placeholder = translations[searchInput.placeholder] || searchInput.placeholder;
+  } else {
+    searchInput.placeholder = searchInput.dataset.placeholder || "Search sections...";
+  }
+
+  const translateBtn = document.getElementById("translateBtn");
+  translateBtn.textContent = isTranslated ? "🌐 Traduzir" : "🌐 Translate";
+
+  isTranslated = !isTranslated;
+}
+
+document.getElementById("translateBtn").addEventListener("click", translatePage);
+loadTranslations();
+
   </script>
 </body>
 </html>

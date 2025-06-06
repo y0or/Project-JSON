@@ -266,3 +266,27 @@ footer {
     padding: 15px 10px 15px 10px;
   }
 }
+
+/* Botão de tradução */
+.translate-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#translateBtn {
+  background-color: #2a2a2a;
+  color: #61dafb;
+  border: 2px solid #61dafb;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 0 8px #000;
+}
+
+#translateBtn:hover {
+  background-color: #61dafb;
+  color: #121212;
+}
